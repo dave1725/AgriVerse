@@ -80,22 +80,9 @@ app.post('/login',(req,res) => {
 })
 
 
-app.post('/Dashboard',(req,res) =>{
-    const sql = "UPDATE METADATA SET STATUS='yes' WHERE `AadharNo` = ?";
-    db.query(sql, [req.body.value],(err,data)=>{
-        if(err){
-            console.log("errror : "+ err);
-            return res.json("Error");
-        }
-        if(data.affectedRows > 0){
-            console.log(data);
-            return res.json("Success");
-        }
-    })
-})
 
 app.post('/produces',(req,res) => {
-    const sql = "SELECT * FROM CROPS where `farmer_id` = ?";
+    const sql = "SELECT * FROM crops where `farmer_id` = ?";
     db.query(sql,[req.body.farmer],(err,data)=>{
 
         if(err){
