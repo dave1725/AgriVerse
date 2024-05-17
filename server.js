@@ -1,7 +1,7 @@
 const express = require("express");
 const cors  = require("cors");
 const mysql = require("mysql")
-const path = require('path');
+//const path = require('path');
 const fs = require('fs');
 
 const corsOptions = {
@@ -21,14 +21,28 @@ app.use(express.json());
 
 //user:dave
 //pwd:1QgaJ8dxXdbSBu0-oiW1YA
+// const db = mysql.createConnection({
+//   host: "busl0fw5mu4d4ohf5esm-mysql.services.clever-cloud.com",
+//   user: "ukrgaiw7medad8sg",
+//   password: "ttkw2xalbRjlvd1SIBbT",
+//   database: "busl0fw5mu4d4ohf5esm",
+//   port: 3306
+// });
+
+const mysql = require('mysql2')
+
 const db = mysql.createConnection({
-  connectionLimit: 10,
-  host: "sql12.freesqldatabase.com",
-  user: "sql12707271",
-  password: "WTbiPQ8KXg",
-  database: "sql12707271",
-  port: 3306
+    host: "busl0fw5mu4d4ohf5esm-mysql.services.clever-cloud.com",
+    user: "ukrgaiw7medad8sg", 
+    password: "ttkw2xalbRjlvd1SIBbT",
+    database: "busl0fw5mu4d4ohf5esm",
+    port:3306,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
+
+
 
 
 app.post('/login',(req,res) => {
@@ -413,6 +427,15 @@ app.post("/addStakeholder",(req,res)=>{
 })
 
 app.listen(8081, ()=>{
+    const sql = "select * from orders";
+    db.query(sql,(err,data)=>{
+        if(err){
+            console.log("error"+err);
+        }
+        else{
+            console.log(data);
+        }
+    })
     console.log("Listening...");
 })
 
